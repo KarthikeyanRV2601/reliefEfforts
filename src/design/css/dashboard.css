@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.dashboardBody {
+  width: 100%;
+  height: 100vh;
+}
+
+.dashboardBody .navbar {
+  width: 100%;
+  height: 50px;
+  background: white;
+}
+
+.dashboardBody .accountDetails {
+  margin-top: 10px;
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  background: white;
+}
+/*# sourceMappingURL=dashboard.css.map */

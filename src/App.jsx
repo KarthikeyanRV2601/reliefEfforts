@@ -8,8 +8,9 @@ import Transaction from './abis/Transaction.json';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Login from './routes/login';
 import Signup from './routes/signup';
-import requestFunds from './routes/requestFunds';
-
+import RequestFunds from './routes/requestFunds';
+import dashboard from './routes/dashboard';
+import DistrictRequest from './routes/districtRequest';
 
 
 
@@ -118,7 +119,9 @@ var App=()=>{
           <Switch>
                 <Route exact path='/login' component={Login} />
                 <Route exact path="/signup" component={Signup}/>
-                <Route exact path="/requestFunds" component={requestFunds}/>
+                <Route exact path="/requestFunds" component={RequestFunds}/>
+                <Route exact path="/dashboard" component={dashboard}/>
+                <Route exact path="/districtrequest" component={DistrictRequest}/>
           </Switch>
         </Router>
     
