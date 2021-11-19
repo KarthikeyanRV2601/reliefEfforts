@@ -19,8 +19,8 @@ const DistrictRequest=()=>{
         uniqueStates.add(_state);
         uniqueDistricts.add(_district);
         });
-
-        console.log({uniqueDistricts,uniqueStates})
+        // setKeys(uniqueDistricts);
+        // console.log({uniqueDistricts,uniqueStates})
     }, )
     
 
@@ -29,47 +29,47 @@ const DistrictRequest=()=>{
 
     const [dataSource,setdataSource]=useState();
     const [chartTitle,setTitle]=useState();
-    const [targetregion,setTargetreion]=useState("District");
-    const [targetKey,setTargetkey]=useState("");
+    const [targetregion,setTargetregion]=useState("district");
+    const [targetKey,setTargetkey]=useState("Shravasti");
+    const [keys,setKeys]=useState([]);
     
-    const keyReference = useRef(null);
-    useEffect(() => {
-        loadoptions();
-    }, [])
     useEffect(() => {
         setdataSource(fetchPieData(targetKey,targetregion));
     }, [targetKey,targetregion])
     
-    const loadoptions=()=>{
-        console.log(keyReference.current)
-    }
+    
 
     const fetchPieData=(key,choice)=>{
         let [districtData,stateData]=groupData();
         let result;
+        // console.log(choice)
         switch(choice)
         {
             case "district":
                 {
                     result=getSpecificDataSource(key,clusterrequestTypes(districtData));
-                   
+                    setKeys(Array.from(uniqueDistricts));
                     break;
                 }
             case "state":
                 {
                     result=getSpecificDataSource(key,clusterrequestTypes(stateData));
+                    setKeys(Array.from(uniqueStates));
                     break;
                 }
             default :break;
 
         }
+        // console.log(result)
         return result;
     }
 
     const getSpecificDataSource=(key,dataset)=>{
         let datatoReturn=[]
+        console.log(key,dataset)
         for(let entry in dataset[key])
         {
+            
             datatoReturn.push(
                 {
                     "requestType":entry,
@@ -154,7 +154,7 @@ const DistrictRequest=()=>{
         <>
         <label htmlFor="region">Select region type</label>
         <select id="region" 
-        onChange={e=>setTargetreion(e.target.value)}>
+        onChange={e=>setTargetregion(e.target.value)}>
             <option value="district">District</option>
             <option value="state">State</option>
         </select>
@@ -164,9 +164,10 @@ const DistrictRequest=()=>{
         onChange={e=>{
             setTargetkey(e.target.value)
         }}
-        ref={keyReference}
         >
-            
+        {
+            keys && keys.map((key,id)=><option value={key} id={id}>{key}</option>)
+        }
         </select>
 
        {  dataSource&&
