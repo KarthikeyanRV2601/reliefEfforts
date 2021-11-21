@@ -9,7 +9,7 @@ import PieChart, {
     Connector,
   } from 'devextreme-react/pie-chart';
 
-const DistrictRequest=()=>{
+const RequestVisalize=()=>{
     let uniqueStates=new Set();
     let uniqueDistricts=new Set();
     useEffect(() => {
@@ -19,8 +19,6 @@ const DistrictRequest=()=>{
         uniqueStates.add(_state);
         uniqueDistricts.add(_district);
         });
-        // setKeys(uniqueDistricts);
-        // console.log({uniqueDistricts,uniqueStates})
     }, )
     
 
@@ -152,6 +150,7 @@ const DistrictRequest=()=>{
       
     return(
         <>
+        <h1>Request insights</h1>
         <label htmlFor="region">Select region type</label>
         <select id="region" 
         onChange={e=>setTargetregion(e.target.value)}>
@@ -200,4 +199,4 @@ const DistrictRequest=()=>{
 }
 
 
-export default DistrictRequest;
+export default RequestVisalize;

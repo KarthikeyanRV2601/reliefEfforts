@@ -1,6 +1,11 @@
 import React, { useEffect,useState} from 'react';
 import '../design/css/signup.css';
+import { useAuth } from "../contexts/AuthContext"
+import { Link, useHistory } from "react-router-dom"
+
 const Signup =()=>{
+    const { signup } = useAuth()
+    const history = useHistory()
     const [userData,setUserData]=useState(
         {
             fullname:"",
@@ -17,6 +22,22 @@ const Signup =()=>{
         data[e.target.id]=e.target.value
         setUserData(data)
         // console.log(userData)
+    }
+
+    const handleSubmit=async(e)=>{
+        e.preventDefault()
+        if (userData.password !== userData.cnfPassword) {
+        console.error("Passwords do not match");
+        return
+        }
+
+        try {
+        await signup(userData.email, userData.password)
+        window.localStorage.setItem("currentUser",userData.email);
+        history.push("/")
+        } catch {
+        console.error("Failed to create an account")
+        }
     }
     
     return(
@@ -75,12 +96,15 @@ const Signup =()=>{
                     </div>
                     
                     <div class="group">
-                        <input type="submit" class="button" value="Sign Up"/>
+                        <button  class="button"
+                        onClick={e=>{
+                            handleSubmit(e)
+                        }}
+                        >sign up</button>
                     </div>
                     <div class="hr"></div>
                     <div class="foot-lnk">
-                        
-                        <a href="/login">Already a Member?</a>
+                        <a href="/login" style={{color:"white"}}>Already a Member?</a>
                     </div>
                 </div>
                 </div>
