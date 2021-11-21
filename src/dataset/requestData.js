@@ -922,7 +922,7 @@ const createDataset=()=>{
                 "district":district,
                 "state":state.state,
                 "requestType":type,
-                "timestamp":i
+                "timestamp":Date().toString()
             }
         )
     }

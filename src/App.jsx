@@ -1,7 +1,7 @@
 import React, { useEffect,useState} from 'react';
 import './App.css';
 import { readString } from 'react-papaparse';
-import dataset from './dataset/fund_data_CSV.csv';
+import dataset from './dataset/fund_data.csv';
 // import User from '../abis/User.json';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Login from './routes/login';
@@ -24,31 +24,26 @@ var App=()=>{
   
 
   const [datasetArray,setdataArray]=useState([]);
-
+  const [uniqueDonors,setDonors]=useState([]);
   useEffect(() => {
-    simulateTransactions();
+    readString(dataset, papaConfig);
   }, [])
   
   useEffect(() => {
-    let dataDictionary={};
+    let uniqueDonors=[];
     if(datasetArray!=[])
     {
       datasetArray.forEach(async (data)=>{
         // let response=await makeTransaction(data[1],data[2],data[3]);
-        if(data[1] in dataDictionary)
-        {
-          dataDictionary[data[1]].push({
-            "time":data[3],
-            "amount":data[2]})}
-        else{
-          dataDictionary[data[1]]=[];
-        }
+        if(data[1])
+        uniqueDonors.push(data[1])
       })
     }
-    console.log(dataDictionary);
+    // console.log(uniqueDonors);
+    setDonors(uniqueDonors)
   }, [datasetArray])
   
- 
+  
   const papaConfig = {
       complete: (results, file) => {
         setdataArray(results.data.slice(1))
@@ -61,18 +56,14 @@ var App=()=>{
 
 
 
-  async function simulateTransactions(){
-    readString(dataset, papaConfig);
-    
-  }
-
+  
 
   return(
     <>
         <Router>
           <AuthProvider>
             <Switch>
-                  <PrivateRoute exact path="/" component={Dashboard} />
+                  <Route exact path="/dashboard" component={Dashboard} />
                   <Route exact path='/login' component={Login} />
                   <Route exact path="/signup" component={Signup}/>
                   <Route exact path='/upload-dataset' component={IPFSUpload}/>
